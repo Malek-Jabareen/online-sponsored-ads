@@ -21,15 +21,26 @@ public class Campaign {
     @CreatedDate
     private long timestamp;
 
+    private String sellerId;
+
     public Campaign() {
         this.timestamp = System.currentTimeMillis();
     }
 
-    public Campaign(String id, CampaignStatus status, List<Product> products) {
+    public Campaign(String id, CampaignStatus status, String sellerId, List<Product> products) {
         this.id = id;
         this.status = status;
+        this.sellerId = sellerId;
         this.products = products;
         this.timestamp = System.currentTimeMillis();
+    }
+
+    public String getSellerId() {
+        return sellerId;
+    }
+
+    public void setSellerId(String sellerId) {
+        this.sellerId = sellerId;
     }
 
     public String getId() {

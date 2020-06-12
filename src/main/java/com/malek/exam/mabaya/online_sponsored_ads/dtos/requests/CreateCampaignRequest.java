@@ -1,4 +1,4 @@
-package com.malek.exam.mabaya.online_sponsored_ads.dtos;
+package com.malek.exam.mabaya.online_sponsored_ads.dtos.requests;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;

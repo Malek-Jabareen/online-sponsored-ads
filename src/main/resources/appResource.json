@@ -1,3 +1,5 @@
 {
-  "AppInitiatedSuccessfully": "App was initiated successfully"
+  "AppInitiatedSuccessfully": "App was initiated successfully",
+  "SellerNotFound": "Seller was not found",
+  "SaveToDatabaseError": "Something went wrong with saving the document to the database"
 }
