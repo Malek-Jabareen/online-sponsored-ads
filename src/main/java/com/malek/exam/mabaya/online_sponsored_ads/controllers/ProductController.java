@@ -1,6 +1,7 @@
 package com.malek.exam.mabaya.online_sponsored_ads.controllers;
 
 import com.malek.exam.mabaya.online_sponsored_ads.dtos.ProductDto;
+import com.malek.exam.mabaya.online_sponsored_ads.models.ApiResponse;
 import com.malek.exam.mabaya.online_sponsored_ads.services.ProductService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +22,9 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/")
-    public ResponseEntity<List<ProductDto>> getProducts() {
-        return new ResponseEntity<List<ProductDto>>(productService.getProducts(), HttpStatus.OK);
+    public ResponseEntity<ApiResponse<List<ProductDto>>> getProducts() {
+        ApiResponse<List<ProductDto>> response = new ApiResponse<List<ProductDto>>();
+        response.data = productService.getProducts();
+        return new ResponseEntity<ApiResponse<List<ProductDto>>>(response, HttpStatus.OK);
     }
-
-//    @PostMapping("/generate")
-//    public ResponseEntity<boolean> generateProducts() {
-//        return new ResponseEntity<boolean>(true, HttpStatus.OK);
-//    }
 }

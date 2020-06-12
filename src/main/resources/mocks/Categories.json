@@ -1,0 +1,16 @@
+{
+  "data": [
+    {
+      "name": "Sport",
+      "description": "Just a Sport category"
+    },
+    {
+      "name": "Music",
+      "description": "Just a Music category"
+    },
+    {
+      "name": "Fashion",
+      "description": "Just a Fashion category"
+    }
+  ]
+}
