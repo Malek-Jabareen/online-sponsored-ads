@@ -1,19 +1,28 @@
 package com.malek.exam.mabaya.online_sponsored_ads.controllers;
 
+import com.malek.exam.mabaya.online_sponsored_ads.dtos.CreateCampaignRequest;
+import com.malek.exam.mabaya.online_sponsored_ads.models.ApiResponse;
+import com.malek.exam.mabaya.online_sponsored_ads.services.CampaignService;
 import io.swagger.annotations.Api;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 
 @RestController
-@RequestMapping("/campaign")
-@Api(tags = "Campaign")
+@RequestMapping("/campaigns")
+@Api(tags = "Campaigns")
 public class CampaignController {
 
-    @GetMapping("/")
-    public int getIntTest(@RequestBody(required = true) String justAString) {
-        return 1;
+    @Autowired
+    private CampaignService campaignService;
+
+    @PostMapping("/")
+    public ResponseEntity<ApiResponse> createCampaign(@Valid @RequestBody(required = true) CreateCampaignRequest createCampaignRequest) {
+        ApiResponse response = campaignService.createCampaign(createCampaignRequest);
+        return ResponseEntity.status(200).body(response);
+
     }
 }

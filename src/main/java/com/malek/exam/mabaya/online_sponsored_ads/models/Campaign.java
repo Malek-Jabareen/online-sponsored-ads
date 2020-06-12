@@ -1,12 +1,13 @@
 package com.malek.exam.mabaya.online_sponsored_ads.models;
 
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
-@Document
+@Document(collection = "campaign")
 public class Campaign {
 
     @Id
@@ -17,6 +18,7 @@ public class Campaign {
     @DBRef
     private List<Product> products;
 
+    @CreatedDate
     private long timestamp;
 
     public Campaign() {

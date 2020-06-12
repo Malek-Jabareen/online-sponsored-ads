@@ -30,21 +30,34 @@ public class InitDataService {
     public ApiResponse initData() throws IOException, ParseException {
         ApiResponse response = new ApiResponse();
         try {
+            // Get data from json files
             List<Category> categories = Arrays.asList((Category[]) JsonHelper.getJsonArray("src/main/resources/mocks/Categories.json", Category[].class));
             List<Seller> sellers = Arrays.asList((Seller[]) JsonHelper.getJsonArray("src/main/resources/mocks/Sellers.json", Seller[].class));
             Map<String, Object> jsonMap = new HashMap<>();
-            categories = categoryRepository.insert(categories);
-            jsonMap.put("categories", categories);
 
+            // Insert categories to the database
+            categories = categoryRepository.insert(categories);
+
+            // Insert Sellers and their Products to the database
             sellers.forEach(seller -> {
                 List<Product> sellerProducts = new ArrayList<Product>();
                 seller.getProducts().forEach(product -> {
+                    product.setSellerId(seller.getId());
                     sellerProducts.add(productRepository.insert(product));
                 });
                 seller.setProducts(sellerProducts);
             });
-
             sellers = sellerRepository.insert(sellers);
+
+            // Foreach product find for which seller it is belongs and update its SellerId
+            productRepository.findAll()
+                    .forEach(product -> {
+                        String sellerId = sellerRepository.findSellerByProductsContains(product).getId();
+                        product.setSellerId(sellerId);
+                        productRepository.save(product);
+                    });
+
+            jsonMap.put("categories", categories);
             jsonMap.put("sellers", sellers);
 
             response.data = jsonMap;
