@@ -1,6 +1,6 @@
 package com.malek.exam.mabaya.online_sponsored_ads.models;
 
-import org.bson.types.ObjectId;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -11,10 +11,11 @@ import java.util.List;
 public class Seller {
 
     @Id
-    private ObjectId id;
+    private String id;
 
     private String userName;
 
+    @CreatedDate
     private long timestamp;
     @DBRef
     private List<Product> products;
@@ -22,18 +23,18 @@ public class Seller {
     public Seller() {
     }
 
-    public Seller(ObjectId id, String userName, List<Product> products) {
+    public Seller(String id, String userName, List<Product> products) {
         this.id = id;
         this.userName = userName;
         this.timestamp = System.currentTimeMillis();
         this.products = products;
     }
 
-    public ObjectId getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(ObjectId id) {
+    public void setId(String id) {
         this.id = id;
     }
 

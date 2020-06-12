@@ -1,46 +1,46 @@
 package com.malek.exam.mabaya.online_sponsored_ads.models;
 
-import org.bson.types.ObjectId;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document
+@Document(collection = "products")
 public class Product {
     @Id
-    private ObjectId id;
+    private String id;
 
     private String title;
 
     private float price;
 
-    @DBRef
-    private Category category;
+    private String categoryName;
 
+    @CreatedDate
     private long timestamp;
 
     private int serialNumber;
 
-    private ObjectId sellerId;
+    private String sellerId;
 
     public Product() {
     }
 
-    public Product(ObjectId id, String title, float price, Category category, int serialNumber, ObjectId sellerId) {
+    public Product(String id, String title, float price, String categoryName, int serialNumber, String sellerId) {
         this.id = id;
         this.title = title;
         this.price = price;
-        this.category = category;
+        this.categoryName = categoryName;
         this.timestamp = System.currentTimeMillis();
         this.serialNumber = serialNumber;
         this.sellerId = sellerId;
     }
 
-    public ObjectId getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(ObjectId id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -60,12 +60,12 @@ public class Product {
         this.price = price;
     }
 
-    public Category getCategory() {
-        return category;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     public long getTimestamp() {
@@ -84,11 +84,11 @@ public class Product {
         this.serialNumber = serialNumber;
     }
 
-    public ObjectId getSellerId() {
+    public String getSellerId() {
         return sellerId;
     }
 
-    public void setSellerId(ObjectId sellerId) {
+    public void setSellerId(String sellerId) {
         this.sellerId = sellerId;
     }
 }

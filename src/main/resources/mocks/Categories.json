@@ -11,6 +11,18 @@
     {
       "name": "Fashion",
       "description": "Just a Fashion category"
+    },
+    {
+      "name": "AnotherFashion",
+      "description": "Just a AnotherFashion category"
+    },
+    {
+      "name": "Electronic",
+      "description": "Just a Electronic category"
+    },
+    {
+      "name": "Internet",
+      "description": "Just a Internet category"
     }
   ]
 }

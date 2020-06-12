@@ -22,9 +22,9 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/")
-    public ResponseEntity<ApiResponse<List<ProductDto>>> getProducts() {
-        ApiResponse<List<ProductDto>> response = new ApiResponse<List<ProductDto>>();
+    public ResponseEntity<ApiResponse> getProducts() {
+        ApiResponse response = new ApiResponse();
         response.data = productService.getProducts();
-        return new ResponseEntity<ApiResponse<List<ProductDto>>>(response, HttpStatus.OK);
+        return new ResponseEntity<ApiResponse>(response, HttpStatus.OK);
     }
 }

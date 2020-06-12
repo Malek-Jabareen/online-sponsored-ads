@@ -5,6 +5,6 @@ import com.malek.exam.mabaya.online_sponsored_ads.models.Category;
 
 public class CategoryMapper {
     public static CategoryDto toCategoryDto(Category category) {
-        return new CategoryDto();
+        return new CategoryDto(category.getId(), category.getName(), category.getDescription());
     }
 }
