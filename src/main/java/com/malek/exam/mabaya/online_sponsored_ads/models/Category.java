@@ -29,6 +29,10 @@ public class Category {
         this.timestamp = System.currentTimeMillis();
     }
 
+    public Category(String name) {
+        this.name = name;
+    }
+
     public String getId() {
         return id;
     }

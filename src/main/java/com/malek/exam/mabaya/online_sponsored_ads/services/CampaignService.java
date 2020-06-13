@@ -2,7 +2,7 @@ package com.malek.exam.mabaya.online_sponsored_ads.services;
 
 import com.malek.exam.mabaya.online_sponsored_ads.dtos.requests.CreateCampaignRequest;
 import com.malek.exam.mabaya.online_sponsored_ads.exceptions.NotFoundException;
-import com.malek.exam.mabaya.online_sponsored_ads.exceptions.SaveToDatabaseException;
+import com.malek.exam.mabaya.online_sponsored_ads.exceptions.ConnectToDatabaseException;
 import com.malek.exam.mabaya.online_sponsored_ads.models.ApiResponse;
 import com.malek.exam.mabaya.online_sponsored_ads.models.Campaign;
 import com.malek.exam.mabaya.online_sponsored_ads.models.Product;
@@ -24,8 +24,8 @@ public class CampaignService {
     @Autowired
     private TranslationService translationService;
 
-    public ApiResponse createCampaign(CreateCampaignRequest createCampaignRequest) {
-        ApiResponse response = new ApiResponse();
+    public ApiResponse<Campaign> createCampaign(CreateCampaignRequest createCampaignRequest) {
+        ApiResponse<Campaign> response = new ApiResponse<Campaign>();
         Campaign campaign = new Campaign();
         if (sellerRepository.findById(createCampaignRequest.getSellerId()).isEmpty()) {
             throw new NotFoundException(translationService.translate("SellerNotFound"));
@@ -36,7 +36,17 @@ public class CampaignService {
             campaign.setProducts(productList);
             response.data = campaignRepository.save(campaign);
         } catch (Exception e) {
-            throw new SaveToDatabaseException(translationService.translate("SaveToDatabaseError"));
+            throw new ConnectToDatabaseException(translationService.translate("SaveToDatabaseError"));
+        }
+        return response;
+    }
+
+    public ApiResponse<List<Campaign>> getCampaigns() {
+        ApiResponse<List<Campaign>> response = new ApiResponse<List<Campaign>>();
+        try {
+            response.data = campaignRepository.findAll();
+        } catch (Exception e) {
+            throw new ConnectToDatabaseException(translationService.translate("ReadFromDatabaseError"));
         }
         return response;
     }

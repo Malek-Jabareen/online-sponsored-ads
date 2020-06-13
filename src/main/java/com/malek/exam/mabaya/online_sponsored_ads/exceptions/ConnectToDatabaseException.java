@@ -2,9 +2,9 @@ package com.malek.exam.mabaya.online_sponsored_ads.exceptions;
 
 import org.springframework.http.HttpStatus;
 
-public class SaveToDatabaseException extends ApiBaseException {
+public class ConnectToDatabaseException extends ApiBaseException {
 
-    public SaveToDatabaseException(String message) {
+    public ConnectToDatabaseException(String message) {
         super(message);
     }
 

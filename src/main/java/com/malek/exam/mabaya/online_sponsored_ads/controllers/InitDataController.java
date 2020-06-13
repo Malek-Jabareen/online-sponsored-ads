@@ -11,19 +11,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 @RestController
-@RequestMapping("/initData")
-@Api(tags = "Init Data", description = "This Api will insert Categories, Products and Sellers to the MongoDB ")
+@RequestMapping("/data")
+@Api(tags = "Data", description = "This Api will insert Categories, Products and Sellers to the MongoDB or delete them")
 public class InitDataController {
 
     @Autowired
     private InitDataService initDataService;
 
-    @GetMapping("/")
-    public ResponseEntity<ApiResponse> initData() throws IOException, ParseException {
-        ApiResponse response = initDataService.initData();
+    @GetMapping("/initData")
+    public ResponseEntity<ApiResponse<Object>> initData() throws IOException, ParseException {
+        ApiResponse<Object> response = initDataService.initData();
+        return ResponseEntity.status(200).body(response);
+    }
+
+    @GetMapping("/deleteData")
+    public ResponseEntity<ApiResponse<Object>> deleteData() throws IOException, ParseException {
+        ApiResponse<Object> response = initDataService.deleteData();
         return ResponseEntity.status(200).body(response);
     }
 }

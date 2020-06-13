@@ -36,6 +36,14 @@ public class Product {
         this.sellerId = sellerId;
     }
 
+    public Product(String title, float price, String categoryName, int serialNumber, String sellerId) {
+        this.title = title;
+        this.price = price;
+        this.categoryName = categoryName;
+        this.serialNumber = serialNumber;
+        this.sellerId = sellerId;
+    }
+
     public String getId() {
         return id;
     }

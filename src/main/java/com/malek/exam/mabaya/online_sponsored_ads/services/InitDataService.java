@@ -5,6 +5,7 @@ import com.malek.exam.mabaya.online_sponsored_ads.models.ApiResponse;
 import com.malek.exam.mabaya.online_sponsored_ads.models.Category;
 import com.malek.exam.mabaya.online_sponsored_ads.models.Product;
 import com.malek.exam.mabaya.online_sponsored_ads.models.Seller;
+import com.malek.exam.mabaya.online_sponsored_ads.repositories.CampaignRepository;
 import com.malek.exam.mabaya.online_sponsored_ads.repositories.CategoryRepository;
 import com.malek.exam.mabaya.online_sponsored_ads.repositories.ProductRepository;
 import com.malek.exam.mabaya.online_sponsored_ads.repositories.SellerRepository;
@@ -26,9 +27,11 @@ public class InitDataService {
     private ProductRepository productRepository;
     @Autowired
     private SellerRepository sellerRepository;
+    @Autowired
+    private CampaignRepository campaignRepository;
 
-    public ApiResponse initData() throws IOException, ParseException {
-        ApiResponse response = new ApiResponse();
+    public ApiResponse<Object> initData() throws IOException, ParseException {
+        ApiResponse<Object> response = new ApiResponse<Object>();
         try {
             // Get data from json files
             List<Category> categories = Arrays.asList((Category[]) JsonHelper.getJsonArray("src/main/resources/mocks/Categories.json", Category[].class));
@@ -65,6 +68,15 @@ public class InitDataService {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        return response;
+    }
+
+    public ApiResponse<Object> deleteData() {
+        ApiResponse<Object> response = new ApiResponse<Object>();
+        productRepository.deleteAll();
+        sellerRepository.deleteAll();
+        categoryRepository.deleteAll();
+        campaignRepository.deleteAll();
         return response;
     }
 }
