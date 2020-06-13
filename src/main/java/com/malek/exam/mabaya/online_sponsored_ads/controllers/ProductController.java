@@ -24,36 +24,31 @@ public class ProductController {
 
     @GetMapping("")
     public ResponseEntity<ApiResponse<List<ProductDto>>> getProducts() {
-        ApiResponse<List<ProductDto>> response = new ApiResponse<List<ProductDto>>();
-        response = productService.getProducts();
+        ApiResponse<List<ProductDto>> response = productService.getProducts();
         return new ResponseEntity<ApiResponse<List<ProductDto>>>(response, HttpStatus.OK);
     }
 
     @PostMapping("")
     public ResponseEntity<ApiResponse<ProductDto>> addProduct(@Valid @RequestBody CreateProductRequest createProductRequest) {
-        ApiResponse<ProductDto> response = new ApiResponse<ProductDto>();
-        response = productService.addProduct(createProductRequest);
-        return new ResponseEntity<ApiResponse<ProductDto>>(response, HttpStatus.OK);
+        ApiResponse<ProductDto> response = productService.addProduct(createProductRequest);
+        return ResponseEntity.status(200).body(response);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<ProductDto>> getProduct(@PathVariable String id) {
-        ApiResponse<ProductDto> response = new ApiResponse<ProductDto>();
-        response = productService.getProduct(id);
-        return new ResponseEntity<ApiResponse<ProductDto>>(response, HttpStatus.OK);
+        ApiResponse<ProductDto> response = productService.getProduct(id);
+        return ResponseEntity.status(200).body(response);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<Void>> deleteProduct(@PathVariable String id) {
-        ApiResponse<Void> response = new ApiResponse<Void>();
-        response = productService.deleteProduct(id);
-        return new ResponseEntity<ApiResponse<Void>>(response, HttpStatus.OK);
+        ApiResponse<Void> response = productService.deleteProduct(id);
+        return ResponseEntity.status(200).body(response);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<ProductDto>> updateProduct(@PathVariable String id, @Valid @RequestBody UpdateProductRequest updateProductRequest) {
-        ApiResponse<ProductDto> response = new ApiResponse<ProductDto>();
-        response = productService.updateProduct(id, updateProductRequest);
-        return new ResponseEntity<ApiResponse<ProductDto>>(response, HttpStatus.OK);
+        ApiResponse<ProductDto> response = productService.updateProduct(id, updateProductRequest);
+        return ResponseEntity.status(200).body(response);
     }
 }

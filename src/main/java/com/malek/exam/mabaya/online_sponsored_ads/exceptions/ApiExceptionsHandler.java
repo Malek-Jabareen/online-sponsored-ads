@@ -40,4 +40,6 @@ public class ApiExceptionsHandler extends ResponseEntityExceptionHandler {
         response.statusCode = HttpStatus.BAD_REQUEST;
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
+
+
 }

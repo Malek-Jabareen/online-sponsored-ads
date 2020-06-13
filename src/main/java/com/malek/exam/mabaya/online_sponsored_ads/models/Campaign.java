@@ -23,12 +23,19 @@ public class Campaign {
 
     private String sellerId;
 
+    private String name;
+
+    private float bid;
+
+
     public Campaign() {
         this.timestamp = System.currentTimeMillis();
     }
 
-    public Campaign(String id, CampaignStatus status, String sellerId, List<Product> products) {
+    public Campaign(String id, String name, float bid, CampaignStatus status, String sellerId, List<Product> products) {
         this.id = id;
+        this.name = name;
+        this.bid = bid;
         this.status = status;
         this.sellerId = sellerId;
         this.products = products;
@@ -65,5 +72,29 @@ public class Campaign {
 
     public void setProducts(List<Product> products) {
         this.products = products;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public float getBid() {
+        return bid;
+    }
+
+    public void setBid(float bid) {
+        this.bid = bid;
     }
 }
