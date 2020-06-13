@@ -6,5 +6,6 @@
   "CategoryNotFound": "Category was not found",
   "CampaignStatusIsInvalid": "Campaign status should be either ACTIVE or DELETED",
   "SaveToDatabaseError": "Something went wrong with saving the document to the database",
+  "DeleteFromDatabaseError": "Something went wrong with deleting the document to the database",
   "ReadFromDatabaseError": "Something went wrong with reading data from the database"
 }

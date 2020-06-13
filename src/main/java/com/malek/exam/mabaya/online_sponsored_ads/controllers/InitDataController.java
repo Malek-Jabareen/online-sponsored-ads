@@ -6,6 +6,7 @@ import io.swagger.annotations.Api;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,8 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("/data")
-@Api(tags = "Data", description = "This Api will insert Categories, Products and Sellers to the MongoDB or delete them")
+@RequestMapping("/dataManagement")
+@Api(tags = "Data Management", description = "This APIs will Initiate/Clean the Database")
 public class InitDataController {
 
     @Autowired
@@ -26,7 +27,7 @@ public class InitDataController {
         return ResponseEntity.status(200).body(response);
     }
 
-    @GetMapping("/deleteData")
+    @DeleteMapping("/deleteData")
     public ResponseEntity<ApiResponse<Object>> deleteData() throws IOException, ParseException {
         ApiResponse<Object> response = initDataService.deleteData();
         return ResponseEntity.status(200).body(response);

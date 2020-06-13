@@ -4,6 +4,7 @@ import com.malek.exam.mabaya.online_sponsored_ads.dtos.ProductDto;
 import com.malek.exam.mabaya.online_sponsored_ads.dtos.requests.CreateProductRequest;
 import com.malek.exam.mabaya.online_sponsored_ads.dtos.requests.UpdateProductRequest;
 import com.malek.exam.mabaya.online_sponsored_ads.models.ApiResponse;
+import com.malek.exam.mabaya.online_sponsored_ads.services.AdvertisementsService;
 import com.malek.exam.mabaya.online_sponsored_ads.services.ProductService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,14 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+    @Autowired
+    private AdvertisementsService advertisementsService;
+
+    @GetMapping("/ad/{categoryName}")
+    public ResponseEntity<ApiResponse<ProductDto>> getAd(@PathVariable String categoryName) {
+        ApiResponse<ProductDto> response = advertisementsService.retrieveAds(categoryName);
+        return ResponseEntity.status(200).body(response);
+    }
 
     @GetMapping("")
     public ResponseEntity<ApiResponse<List<ProductDto>>> getProducts() {

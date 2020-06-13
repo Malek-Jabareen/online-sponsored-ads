@@ -4,7 +4,6 @@ import com.malek.exam.mabaya.online_sponsored_ads.dtos.ProductDto;
 import com.malek.exam.mabaya.online_sponsored_ads.dtos.mappers.ProductMapper;
 import com.malek.exam.mabaya.online_sponsored_ads.dtos.requests.CreateProductRequest;
 import com.malek.exam.mabaya.online_sponsored_ads.dtos.requests.UpdateProductRequest;
-import com.malek.exam.mabaya.online_sponsored_ads.exceptions.ConnectToDatabaseException;
 import com.malek.exam.mabaya.online_sponsored_ads.exceptions.NotFoundException;
 import com.malek.exam.mabaya.online_sponsored_ads.models.ApiResponse;
 import com.malek.exam.mabaya.online_sponsored_ads.models.Category;
@@ -18,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -52,12 +52,13 @@ public class ProductService {
 
     public ApiResponse<Void> deleteProduct(String id) {
         ApiResponse<Void> response = new ApiResponse<Void>();
+        Optional<Product> optProduct = productRepository.findById(id);
+        if (optProduct.isEmpty()) {
+            throw new NotFoundException(translationService.translate("ProductNotFound"));
+        }
         try {
-            if (productRepository.findById(id).isEmpty()) {
-                throw new NotFoundException(translationService.translate("ProductNotFound"));
-            }
-            Product product = productRepository.findById(id).get();
-            // Find product seller and delete the product from its products list ( Could do that with a normal query )
+            Product product = optProduct.get();
+            // Find product seller and delete the product from its products list ( MongoDB )
             String sellerId = product.getSellerId();
             productRepository.delete(product);
             Seller seller = sellerRepository.findById(sellerId).get();
@@ -79,10 +80,12 @@ public class ProductService {
         if (sellerRepository.findById(createProductRequest.getSellerId()).isEmpty()) {
             throw new NotFoundException(translationService.translate("SellerNotFound"));
         }
-        if (categoryRepository.findByName(createProductRequest.getCategoryName()) == null) {
+        // Create category if not exists
+        if (categoryRepository.findByNameRegexIgnoreCase(createProductRequest.getCategoryName()) == null) {
             Category category = new Category(createProductRequest.getCategoryName());
             categoryRepository.save(category);
         }
+        // Create new product
         Product product = new Product(
                 createProductRequest.getTitle(),
                 createProductRequest.getPrice(),
@@ -90,6 +93,8 @@ public class ProductService {
                 createProductRequest.getSerialNumber(),
                 createProductRequest.getSellerId()
         );
+
+        // Save the product the DB and add it to his seller
         Seller seller = sellerRepository.findById(createProductRequest.getSellerId()).get();
         response.data = ProductMapper.toProductDto(productRepository.insert(product));
         List<Product> productList = seller.getProducts();
@@ -106,7 +111,7 @@ public class ProductService {
         }
         Product product = productRepository.findById(id).get();
         // Handle missed category
-        if (categoryRepository.findByName(updateProductRequest.getCategoryName()) == null) {
+        if (categoryRepository.findByNameRegexIgnoreCase(updateProductRequest.getCategoryName()) == null) {
             Category category = new Category(updateProductRequest.getCategoryName());
             categoryRepository.save(category);
         }

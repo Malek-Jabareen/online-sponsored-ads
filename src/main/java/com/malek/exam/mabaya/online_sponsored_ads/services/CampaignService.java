@@ -7,10 +7,7 @@ import com.malek.exam.mabaya.online_sponsored_ads.dtos.requests.UpdateCampaignRe
 import com.malek.exam.mabaya.online_sponsored_ads.exceptions.InvalidRequestBodyException;
 import com.malek.exam.mabaya.online_sponsored_ads.exceptions.NotFoundException;
 import com.malek.exam.mabaya.online_sponsored_ads.exceptions.ConnectToDatabaseException;
-import com.malek.exam.mabaya.online_sponsored_ads.models.ApiResponse;
-import com.malek.exam.mabaya.online_sponsored_ads.models.Campaign;
-import com.malek.exam.mabaya.online_sponsored_ads.models.CampaignStatus;
-import com.malek.exam.mabaya.online_sponsored_ads.models.Product;
+import com.malek.exam.mabaya.online_sponsored_ads.models.*;
 
 import com.malek.exam.mabaya.online_sponsored_ads.repositories.CampaignRepository;
 import com.malek.exam.mabaya.online_sponsored_ads.repositories.SellerRepository;
@@ -19,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.validation.ValidationException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,11 +32,14 @@ public class CampaignService {
     public ApiResponse<Campaign> createCampaign(CreateCampaignRequest createCampaignRequest) {
         ApiResponse<Campaign> response = new ApiResponse<Campaign>();
         Campaign campaign = new Campaign();
-        if (sellerRepository.findById(createCampaignRequest.getSellerId()).isEmpty()) {
+        // Retrieve Seller and check if exists
+        Optional<Seller> seller = sellerRepository.findById(createCampaignRequest.getSellerId());
+        if (seller.isEmpty()) {
             throw new NotFoundException(translationService.translate("SellerNotFound"));
         }
         try {
-            List<Product> productList = sellerRepository.findById(createCampaignRequest.getSellerId()).get().getProducts();
+            // Save campaign
+            List<Product> productList = seller.get().getProducts();
             campaign.setSellerId(createCampaignRequest.getSellerId());
             campaign.setProducts(productList);
             campaign.setName(createCampaignRequest.getName());
@@ -77,11 +78,15 @@ public class CampaignService {
         if (!CampaignStatus.isValid(updateCampaignRequest.getStatus().name())) {
             throw new InvalidRequestBodyException(translationService.translate("CampaignStatusIsInvalid"));
         }
-        Campaign campaign = campaignRepository.findById(id).get();
-        campaign.setStatus(updateCampaignRequest.getStatus());
-        campaign.setName(updateCampaignRequest.getName());
-        campaign.setBid(updateCampaignRequest.getBid());
-        response.data = CampaignMapper.toCampaignDto(campaignRepository.save(campaign));
+        try {
+            Campaign campaign = campaignRepository.findById(id).get();
+            campaign.setStatus(updateCampaignRequest.getStatus());
+            campaign.setName(updateCampaignRequest.getName());
+            campaign.setBid(updateCampaignRequest.getBid());
+            response.data = CampaignMapper.toCampaignDto(campaignRepository.save(campaign));
+        } catch (Exception e) {
+            throw new ConnectToDatabaseException(translationService.translate("SaveToDatabaseError"));
+        }
         return response;
     }
 
@@ -90,7 +95,11 @@ public class CampaignService {
         if (campaignRepository.findById(id).isEmpty()) {
             throw new ConnectToDatabaseException(translationService.translate("CampaignNotFound"));
         }
-        campaignRepository.deleteById(id);
+        try {
+            campaignRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new ConnectToDatabaseException(translationService.translate("DeleteFromDatabaseError"));
+        }
         return response;
     }
 }

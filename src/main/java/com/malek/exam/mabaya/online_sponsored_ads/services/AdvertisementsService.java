@@ -9,12 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Random;
 
 
 @Service
 public class AdvertisementsService {
-    @Autowired
-    private TranslationService translationService;
+
     @Autowired
     private CampaignRepository campaignRepository;
     @Autowired
@@ -24,7 +24,7 @@ public class AdvertisementsService {
         ApiResponse<ProductDto> response = new ApiResponse<ProductDto>();
 
         // Retrieve the category from the DB and throw
-        Category category = categoryRepository.findByName(categoryName);
+        Category category = categoryRepository.findByNameRegexIgnoreCase(categoryName);
         List<Campaign> campaigns = campaignRepository.findCampaignsWhereAndStatusIsActiveAndHaveProductsOrderedByBid();
 
         // Option 1 - Product that belongs to an active campaign with highest bid in the category
@@ -42,8 +42,14 @@ public class AdvertisementsService {
                 }
             }
         }
-        // Option 2 - Product that belongs to an active campaign with highest bid but not in the category
-        response.data = ProductMapper.toProductDto(campaigns.get(0).getProducts().get(0));
+        // Valid we have Campaigns
+        if (campaigns.size() == 0)
+            return response;
+
+        // Option 2 - Random product that belongs to an active campaign with highest bid but not in the category
+        List<Product> highestBidCampaignProducts = campaigns.get(0).getProducts();
+        int randomProductIndex = new Random().nextInt((highestBidCampaignProducts.size() - 1) + 1);
+        response.data = ProductMapper.toProductDto(highestBidCampaignProducts.get(randomProductIndex));
         return response;
 
     }
