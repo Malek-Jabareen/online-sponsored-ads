@@ -99,12 +99,12 @@ public class ProductService {
         return response;
     }
 
-    public ApiResponse<ProductDto> updateProduct(UpdateProductRequest updateProductRequest) {
+    public ApiResponse<ProductDto> updateProduct(String id, UpdateProductRequest updateProductRequest) {
         ApiResponse<ProductDto> response = new ApiResponse<ProductDto>();
-        if (productRepository.findById(updateProductRequest.getId()).isEmpty()) {
+        if (productRepository.findById(id).isEmpty()) {
             throw new NotFoundException(translationService.translate("ProductNotFound"));
         }
-        Product product = productRepository.findById(updateProductRequest.getId()).get();
+        Product product = productRepository.findById(id).get();
         // Handle missed category
         if (categoryRepository.findByName(updateProductRequest.getCategoryName()) == null) {
             Category category = new Category(updateProductRequest.getCategoryName());

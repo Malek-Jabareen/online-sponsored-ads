@@ -50,10 +50,10 @@ public class ProductController {
         return new ResponseEntity<ApiResponse<Void>>(response, HttpStatus.OK);
     }
 
-    @PutMapping("")
-    public ResponseEntity<ApiResponse<ProductDto>> updateProduct(@Valid @RequestBody UpdateProductRequest updateProductRequest) {
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponse<ProductDto>> updateProduct(@PathVariable String id, @Valid @RequestBody UpdateProductRequest updateProductRequest) {
         ApiResponse<ProductDto> response = new ApiResponse<ProductDto>();
-        response = productService.updateProduct(updateProductRequest);
+        response = productService.updateProduct(id, updateProductRequest);
         return new ResponseEntity<ApiResponse<ProductDto>>(response, HttpStatus.OK);
     }
 }

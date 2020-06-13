@@ -6,11 +6,6 @@ import javax.validation.constraints.Size;
 
 public class UpdateProductRequest {
 
-
-    @NotEmpty(message = "title must not be empty")
-    @NotNull(message = "title must not be empty")
-    private String id;
-
     @NotEmpty(message = "title must not be empty")
     @NotNull(message = "title must not be empty")
     @Size(min = 2, message = "title must be at least 2 characters length")
@@ -30,8 +25,7 @@ public class UpdateProductRequest {
     public UpdateProductRequest() {
     }
 
-    public UpdateProductRequest(String id, String title, float price, String categoryName, int serialNumber) {
-        this.id = id;
+    public UpdateProductRequest(String title, float price, String categoryName, int serialNumber) {
         this.title = title;
         this.price = price;
         this.categoryName = categoryName;
@@ -70,11 +64,4 @@ public class UpdateProductRequest {
         this.serialNumber = serialNumber;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 }
