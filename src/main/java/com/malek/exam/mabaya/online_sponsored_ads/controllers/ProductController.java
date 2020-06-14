@@ -22,14 +22,6 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
-    @Autowired
-    private AdvertisementsService advertisementsService;
-
-    @GetMapping("/ad/{categoryName}")
-    public ResponseEntity<ApiResponse<ProductDto>> getAd(@PathVariable String categoryName) {
-        ApiResponse<ProductDto> response = advertisementsService.retrieveAds(categoryName);
-        return ResponseEntity.status(200).body(response);
-    }
 
     @GetMapping("")
     public ResponseEntity<ApiResponse<List<ProductDto>>> getProducts() {
@@ -40,24 +32,24 @@ public class ProductController {
     @PostMapping("")
     public ResponseEntity<ApiResponse<ProductDto>> addProduct(@Valid @RequestBody CreateProductRequest createProductRequest) {
         ApiResponse<ProductDto> response = productService.addProduct(createProductRequest);
-        return ResponseEntity.status(200).body(response);
+        return ResponseEntity.status(response.statusCode.value()).body(response);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<ProductDto>> getProduct(@PathVariable String id) {
         ApiResponse<ProductDto> response = productService.getProduct(id);
-        return ResponseEntity.status(200).body(response);
+        return ResponseEntity.status(response.statusCode.value()).body(response);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<Void>> deleteProduct(@PathVariable String id) {
         ApiResponse<Void> response = productService.deleteProduct(id);
-        return ResponseEntity.status(200).body(response);
+        return ResponseEntity.status(response.statusCode.value()).body(response);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<ProductDto>> updateProduct(@PathVariable String id, @Valid @RequestBody UpdateProductRequest updateProductRequest) {
         ApiResponse<ProductDto> response = productService.updateProduct(id, updateProductRequest);
-        return ResponseEntity.status(200).body(response);
+        return ResponseEntity.status(response.statusCode.value()).body(response);
     }
 }

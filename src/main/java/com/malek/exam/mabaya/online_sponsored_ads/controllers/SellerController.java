@@ -24,30 +24,30 @@ public class SellerController {
     @GetMapping("")
     public ResponseEntity<ApiResponse<List<SellerDto>>> getSellers() {
         ApiResponse<List<SellerDto>> response = sellerService.getSellers();
-        return ResponseEntity.status(200).body(response);
+        return ResponseEntity.status(response.statusCode.value()).body(response);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<SellerDto>> getSeller(@PathVariable String id) {
         ApiResponse<SellerDto> response = sellerService.getSeller(id);
-        return ResponseEntity.status(200).body(response);
+        return ResponseEntity.status(response.statusCode.value()).body(response);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<SellerDto>> getSeller(@PathVariable String id, @Valid @RequestBody UpdateSellerRequest updateSellerRequest) {
         ApiResponse<SellerDto> response = sellerService.updateSeller(id, updateSellerRequest);
-        return ResponseEntity.status(200).body(response);
+        return ResponseEntity.status(response.statusCode.value()).body(response);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<Void>> deleteSeller(@PathVariable String id) {
         ApiResponse<Void> response = sellerService.deleteSeller(id);
-        return ResponseEntity.status(200).body(response);
+        return ResponseEntity.status(response.statusCode.value()).body(response);
     }
 
     @PostMapping("")
     public ResponseEntity<ApiResponse<SellerDto>> createSeller(@Valid @RequestBody CreateSellerRequest createSellerRequest) {
         ApiResponse<SellerDto> response = sellerService.createSeller(createSellerRequest);
-        return ResponseEntity.status(200).body(response);
+        return ResponseEntity.status(response.statusCode.value()).body(response);
     }
 }

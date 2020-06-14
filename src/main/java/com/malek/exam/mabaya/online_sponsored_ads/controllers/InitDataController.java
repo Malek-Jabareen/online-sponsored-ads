@@ -24,12 +24,12 @@ public class InitDataController {
     @GetMapping("/initData")
     public ResponseEntity<ApiResponse<Object>> initData() throws IOException, ParseException {
         ApiResponse<Object> response = initDataService.initData();
-        return ResponseEntity.status(200).body(response);
+        return ResponseEntity.status(response.statusCode.value()).body(response);
     }
 
     @DeleteMapping("/deleteData")
     public ResponseEntity<ApiResponse<Object>> deleteData() throws IOException, ParseException {
         ApiResponse<Object> response = initDataService.deleteData();
-        return ResponseEntity.status(200).body(response);
+        return ResponseEntity.status(response.statusCode.value()).body(response);
     }
 }

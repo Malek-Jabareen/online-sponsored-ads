@@ -24,33 +24,33 @@ public class CampaignController {
     private CampaignService campaignService;
 
     @PostMapping("")
-    public ResponseEntity<ApiResponse<Campaign>> createCampaign(@Valid @RequestBody(required = true) CreateCampaignRequest createCampaignRequest) {
-        ApiResponse<Campaign> response = campaignService.createCampaign(createCampaignRequest);
-        return ResponseEntity.status(200).body(response);
+    public ResponseEntity<ApiResponse<CampaignDto>> createCampaign(@Valid @RequestBody(required = true) CreateCampaignRequest createCampaignRequest) {
+        ApiResponse<CampaignDto> response = campaignService.createCampaign(createCampaignRequest);
+        return ResponseEntity.status(response.statusCode.value()).body(response);
 
     }
 
     @GetMapping("")
     public ResponseEntity<ApiResponse<List<CampaignDto>>> getCampaigns() {
         ApiResponse<List<CampaignDto>> response = campaignService.getCampaigns();
-        return ResponseEntity.status(200).body(response);
+        return ResponseEntity.status(response.statusCode.value()).body(response);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<CampaignDto>> getCampaign(@PathVariable String id) {
         ApiResponse<CampaignDto> response = campaignService.getCampaign(id);
-        return ResponseEntity.status(200).body(response);
+        return ResponseEntity.status(response.statusCode.value()).body(response);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<CampaignDto>> updateCampaign(@PathVariable String id, @Valid @RequestBody UpdateCampaignRequest updateCampaignRequest) {
         ApiResponse<CampaignDto> response = campaignService.updateCampaign(id, updateCampaignRequest);
-        return ResponseEntity.status(200).body(response);
+        return ResponseEntity.status(response.statusCode.value()).body(response);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<Void>> deleteCampaign(@PathVariable String id) {
         ApiResponse<Void> response = campaignService.deleteCampaign(id);
-        return ResponseEntity.status(200).body(response);
+        return ResponseEntity.status(response.statusCode.value()).body(response);
     }
 }

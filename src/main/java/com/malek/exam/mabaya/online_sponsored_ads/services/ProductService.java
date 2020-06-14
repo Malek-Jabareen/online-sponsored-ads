@@ -13,6 +13,7 @@ import com.malek.exam.mabaya.online_sponsored_ads.repositories.CategoryRepositor
 import com.malek.exam.mabaya.online_sponsored_ads.repositories.ProductRepository;
 import com.malek.exam.mabaya.online_sponsored_ads.repositories.SellerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -38,6 +39,9 @@ public class ProductService {
         productRepository.findAll()
                 .forEach(product -> products.add(ProductMapper.toProductDto(product)));
         response.data = products;
+        if (products.size() == 0) {
+            response.statusCode = HttpStatus.NO_CONTENT;
+        }
         return response;
     }
 

@@ -12,6 +12,7 @@ import com.malek.exam.mabaya.online_sponsored_ads.models.*;
 import com.malek.exam.mabaya.online_sponsored_ads.repositories.CampaignRepository;
 import com.malek.exam.mabaya.online_sponsored_ads.repositories.SellerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.validation.ValidationException;
@@ -29,8 +30,8 @@ public class CampaignService {
     @Autowired
     private TranslationService translationService;
 
-    public ApiResponse<Campaign> createCampaign(CreateCampaignRequest createCampaignRequest) {
-        ApiResponse<Campaign> response = new ApiResponse<Campaign>();
+    public ApiResponse<CampaignDto> createCampaign(CreateCampaignRequest createCampaignRequest) {
+        ApiResponse<CampaignDto> response = new ApiResponse<CampaignDto>();
         Campaign campaign = new Campaign();
         // Retrieve Seller and check if exists
         Optional<Seller> seller = sellerRepository.findById(createCampaignRequest.getSellerId());
@@ -44,7 +45,7 @@ public class CampaignService {
             campaign.setProducts(productList);
             campaign.setName(createCampaignRequest.getName());
             campaign.setBid(createCampaignRequest.getBid());
-            response.data = campaignRepository.save(campaign);
+            response.data = CampaignMapper.toCampaignDto(campaignRepository.save(campaign));
         } catch (Exception e) {
             throw new ConnectToDatabaseException(translationService.translate("SaveToDatabaseError"));
         }
@@ -55,9 +56,13 @@ public class CampaignService {
         ApiResponse<List<CampaignDto>> response = new ApiResponse<List<CampaignDto>>();
         try {
             response.data = campaignRepository.findAll().stream().map(CampaignMapper::toCampaignDto).collect(Collectors.toList());
+            if (response.data.size() == 0) {
+                response.statusCode = HttpStatus.NO_CONTENT;
+            }
         } catch (Exception e) {
             throw new ConnectToDatabaseException(translationService.translate("ReadFromDatabaseError"));
         }
+
         return response;
     }
 

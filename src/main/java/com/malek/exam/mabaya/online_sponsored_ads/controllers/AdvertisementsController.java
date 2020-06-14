@@ -21,6 +21,6 @@ public class AdvertisementsController {
     @GetMapping("/serveAd/{categoryName}")
     public ResponseEntity<ApiResponse<ProductDto>> getProduct(@PathVariable String categoryName) {
         ApiResponse<ProductDto> response = advertisementsService.retrieveAds(categoryName);
-        return ResponseEntity.status(200).body(response);
+        return ResponseEntity.status(response.statusCode.value()).body(response);
     }
 }

@@ -9,6 +9,7 @@ import com.malek.exam.mabaya.online_sponsored_ads.models.ApiResponse;
 import com.malek.exam.mabaya.online_sponsored_ads.models.Seller;
 import com.malek.exam.mabaya.online_sponsored_ads.repositories.SellerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +26,9 @@ public class SellerService {
         ApiResponse<List<SellerDto>> response = new ApiResponse<List<SellerDto>>();
         response.data = sellerRepository.findAll().stream()
                 .map(SellerMapper::toSellerDto).collect(Collectors.toList());
+        if (response.data.size() == 0) {
+            response.statusCode = HttpStatus.NO_CONTENT;
+        }
         return response;
     }
 

@@ -19,7 +19,8 @@ public class CampaignMapper {
                 campaign.getStatus(),
                 products.stream().map(ProductMapper::toProductDto).collect(Collectors.toList()),
                 campaign.getTimestamp(),
-                campaign.getSellerId()
+                campaign.getSellerId(),
+                campaign.getBid()
 
         );
     }

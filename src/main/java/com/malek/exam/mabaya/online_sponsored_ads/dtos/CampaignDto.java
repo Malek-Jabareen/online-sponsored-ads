@@ -17,12 +17,23 @@ public class CampaignDto {
 
     private String sellerId;
 
-    public CampaignDto(String id, CampaignStatus status, List<ProductDto> products, long timestamp, String sellerId) {
+    private float bid;
+
+    public CampaignDto(String id, CampaignStatus status, List<ProductDto> products, long timestamp, String sellerId, float bid) {
         this.id = id;
         this.status = status;
         this.products = products;
         this.timestamp = timestamp;
         this.sellerId = sellerId;
+        this.bid = bid;
+    }
+
+    public float getBid() {
+        return bid;
+    }
+
+    public void setBid(float bid) {
+        this.bid = bid;
     }
 
     public String getId() {
