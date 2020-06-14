@@ -1,0 +1,109 @@
+{
+  "data": [
+    {
+      "userName": "MalekJab",
+      "products": [
+        {
+          "title": "First Product",
+          "price": 15.5,
+          "categoryName": "Sport",
+          "serialNumber": 1
+        },
+        {
+          "title": "Second Product",
+          "price": 17.5,
+          "categoryName": "Sport",
+          "serialNumber": 2
+        },
+        {
+          "title": "Third Product",
+          "price": 120.5,
+          "categoryName": "Sport",
+          "serialNumber": 3
+        },
+        {
+          "title": "First Product",
+          "price": 20.5,
+          "categoryName": "Fashion",
+          "serialNumber": 4
+        },
+        {
+          "title": "Second Product",
+          "price": 25,
+          "categoryName": "Fashion",
+          "serialNumber": 5
+        }
+      ]
+    },
+    {
+      "userName": "YoniMabaya",
+      "products": [
+        {
+          "title": "Third Product",
+          "price": 115.2,
+          "categoryName": "Fashion",
+          "serialNumber": 6
+        },
+        {
+          "title": "First Product",
+          "price": 24,
+          "categoryName": "Internet",
+          "serialNumber": 7
+        },
+        {
+          "title": "Second Product",
+          "price": 25,
+          "categoryName": "Internet",
+          "serialNumber": 8
+        },
+        {
+          "title": "Third Product",
+          "price": 26,
+          "categoryName": "Internet",
+          "serialNumber": 9
+        },
+        {
+          "title": "First Product",
+          "price": 21,
+          "categoryName": "Music",
+          "serialNumber": 10
+        }
+      ]
+    },
+    {
+      "userName": "MatyMabaya",
+      "products": [
+        {
+          "title": "Second Product",
+          "price": 25,
+          "categoryName": "Music",
+          "serialNumber": 11
+        },
+        {
+          "title": "Third Product",
+          "price": 26,
+          "categoryName": "Music",
+          "serialNumber": 12
+        },
+        {
+          "title": "First Product",
+          "price": 123,
+          "categoryName": "Electronic",
+          "serialNumber": 13
+        },
+        {
+          "title": "Second Product",
+          "price": 144,
+          "categoryName": "Electronic",
+          "serialNumber": 14
+        },
+        {
+          "title": "Third Product",
+          "price": 525,
+          "categoryName": "Electronic",
+          "serialNumber": 15
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "AppInitiatedSuccessfully": "App was initiated successfully",
+  "SellerNotFound": "Seller was not found",
+  "ProductNotFound": "Product was not found",
+  "CampaignNotFound": "Campaign was not found",
+  "CategoryNotFound": "Category was not found",
+  "CampaignStatusIsInvalid": "Campaign status should be either ACTIVE or DELETED",
+  "SaveToDatabaseError": "Something went wrong with saving the document to the database",
+  "DeleteFromDatabaseError": "Something went wrong with deleting the document to the database",
+  "ReadFromDatabaseError": "Something went wrong with reading data from the database"
+}
