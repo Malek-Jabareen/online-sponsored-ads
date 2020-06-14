@@ -34,8 +34,8 @@ public class InitDataService {
         ApiResponse<Object> response = new ApiResponse<Object>();
         try {
             // Get data from json files
-            List<Category> categories = Arrays.asList((Category[]) JsonHelper.getJsonArray("src/main/resources/mocks/Categories.json", Category[].class));
-            List<Seller> sellers = Arrays.asList((Seller[]) JsonHelper.getJsonArray("src/main/resources/mocks/Sellers.json", Seller[].class));
+            List<Category> categories = Arrays.asList((Category[]) JsonHelper.getJsonArray("/Categories.json", Category[].class));
+            List<Seller> sellers = Arrays.asList((Seller[]) JsonHelper.getJsonArray("/Sellers.json", Seller[].class));
             Map<String, Object> jsonMap = new HashMap<>();
 
             // Insert categories to the database

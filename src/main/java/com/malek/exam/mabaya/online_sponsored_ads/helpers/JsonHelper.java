@@ -5,16 +5,20 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Objects;
 
 
 public class JsonHelper {
 
     public static JSONObject readJson(String pathName) {
-
+        BufferedReader bf = new BufferedReader(new InputStreamReader((JsonHelper.class.getResourceAsStream(pathName))));
         JSONParser parser = new JSONParser();
         try {
-            return (JSONObject) parser.parse(new FileReader(pathName));
+            return (JSONObject) parser.parse(bf);
         } catch (Exception e) {
             e.printStackTrace();
             return null;

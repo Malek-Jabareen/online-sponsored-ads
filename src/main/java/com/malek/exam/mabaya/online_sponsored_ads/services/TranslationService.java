@@ -9,7 +9,7 @@ import java.io.IOException;
 
 @Service
 public class TranslationService {
-    private final String resourceFileUri = "src/main/resources/appResource.json";
+    private final String resourceFileUri = "/appResource.json";
     private JSONObject translationObj;
 
     public TranslationService() throws IOException, ParseException {
